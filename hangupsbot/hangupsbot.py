@@ -680,6 +680,22 @@ class HangupsBot(object):
         if not self.send_html_to_user(user_id_or_conversation_id, html, context):
             self.send_html_to_conversation(user_id_or_conversation_id, html, context)
         print(_('DEPRECATED: send_html_to_user_or_conversation(), use send_html_to_conversation() or send_html_to_user()'))
+    
+    def adduserto(self, conversation_id, user_id, context=None):
+        print("conversation {} added users {}".format(conversation_id,user_id))
+        try:
+          yield from self._client.adduser(conversation_id, user_id)
+        except Exception as e:
+          print(_("adduser() {} {} {}".format(conversation_id, user_id, e)))
+        return True
+
+    def setchatname(self, conversation_id, name, context=None):
+        print("conversation {} renamed {}".format(conversation_id, name)) 
+        try:
+         yield from self._client.setchatname(conversation_id, name)
+        except Exception as e:
+          print(_("setchatname() {} {} {} ".format(conversation_id, name, e)))
+        return True
 
     def user_self(self):
         myself = {
